@@ -1,5 +1,5 @@
 <script setup>
-import {onMounted, onUnmounted, ref, watch} from "vue"
+import {onBeforeUnmount, onMounted, onUnmounted, ref, watch} from "vue"
 import {CALL_STATUS, CALL_TYPE, callType, stopCall, isCall, from, to, setCallTo, setCallFrom} from "../index.js"
 import {durationFormat} from "../utils/helper.js"
 import callAudio from "../assets/ringtone/call.mp3"
@@ -582,10 +582,15 @@ watch(() => from.value, (newVal, oldVal) => {
 onMounted(() => {
   console.log("AvCall is Mounted!")
 })
-
-onUnmounted(() => {
+onBeforeUnmount(async () => {
+  if (callStatus.value !== CALL_STATUS.CLOSE) {
+    await hangupCall("hangup", "已挂断")
+  }
   if (ws.value)
     ws.value.close()
+})
+onUnmounted(() => {
+
 })
 </script>
 

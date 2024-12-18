@@ -4,6 +4,8 @@ $danger-color: #f56c6c;
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
 }
 
 .av-call {
@@ -42,6 +44,7 @@ $danger-color: #f56c6c;
       left: 0;
       z-index: 2;
       background: transparent;
+
       .local-box {
         width: 5.5rem;
         height: 10rem;
@@ -56,6 +59,7 @@ $danger-color: #f56c6c;
           height: inherit;
         }
       }
+
       .operation,
       .user {
         width: inherit;
@@ -166,6 +170,7 @@ $danger-color: #f56c6c;
       top: 0;
       left: 0;
       z-index: 1;
+
       .blur {
         position: fixed;
         left: 0;
