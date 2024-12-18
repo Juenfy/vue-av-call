@@ -1,0 +1,296 @@
+$primary-color: #57be6a;
+$danger-color: #f56c6c;
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.av-call {
+  height: 0;
+  position: fixed;
+  width: 100%;
+  overflow: hidden;
+  transition: hangup 1s;
+  -moz-animation: hangup 1s;
+  -webkit-animation: hangup 1s;
+  bottom: 0;
+  left: 0;
+  z-index: 9999;
+  background: transparent;
+
+  .overlay {
+    height: inherit;
+    width: inherit;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    background: rgba(0, 0, 0, .7);
+  }
+
+  .common-call {
+    width: inherit;
+    height: inherit;
+    background: transparent;
+
+    .call {
+      height: inherit;
+      width: inherit;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 2;
+      background: transparent;
+      .local-box {
+        width: 5.5rem;
+        height: 10rem;
+        z-index: 9999;
+        background: transparent;
+        border-radius: 0;
+        position: fixed;
+        cursor: pointer;
+
+        .local {
+          width: inherit;
+          height: inherit;
+        }
+      }
+      .operation,
+      .user {
+        width: inherit;
+      }
+
+      .user {
+        height: 55%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+
+        .avatar {
+          width: 6rem;
+          height: 6rem;
+          border-radius: 0.6rem;
+        }
+
+        .nickname,
+        .status > span {
+          font-size: 1.5rem;
+          line-height: 2.5rem;
+          color: #fff;
+        }
+
+        .status {
+          span {
+            font-size: 1rem;
+            line-height: 3rem;
+          }
+        }
+      }
+
+      .operation {
+        height: 45%;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+      }
+
+      .callin {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+      }
+
+      .callout-calling {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        flex-direction: column;
+
+        .top {
+          display: flex;
+          flex-direction: column;
+        }
+
+        .top > span {
+          color: #fff;
+          font-size: 1rem;
+          line-height: 3rem;
+        }
+
+        > div {
+          display: flex;
+          justify-content: space-around;
+          align-items: center;
+          width: inherit;
+        }
+
+        .center > div > .btn {
+          color: #f5f5f5;
+          background: transparent;
+          border: 1px solid #dcdee0;
+        }
+
+        .center > .open > .btn {
+          color: #323233;
+          background: #fff;
+          border: 1px solid #dcdee0;
+        }
+
+        .center > div {
+
+          display: flex;
+          align-items: center;
+          flex-direction: column;
+
+          span {
+            margin-top: 4px;
+            font-size: 14px;
+            color: #fff;
+          }
+
+          span:last-child {
+            font-size: 12px;
+            color: #ccc;
+          }
+
+        }
+      }
+    }
+
+    .video {
+      width: inherit;
+      height: inherit;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1;
+      .blur {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: inherit;
+        height: inherit;
+        z-index: 3;
+      }
+
+      .remote {
+        width: inherit;
+        height: inherit;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 2;
+      }
+    }
+  }
+}
+
+.av-call-active {
+  height: 100vh;
+  transition: pullup 1s;
+  -moz-animation: pullup 1s;
+  -webkit-animation: pullup 1s;
+}
+
+@keyframes pullup {
+  from {
+    height: 0;
+  }
+  to {
+    height: 100vh;
+  }
+}
+
+@-moz-keyframes pullup {
+  from {
+    height: 0;
+  }
+  to {
+    height: 100vh;
+  }
+}
+
+@-webkit-keyframes pullup {
+  from {
+    height: 0;
+  }
+  to {
+    height: 100vh;
+  }
+}
+
+@keyframes hangup {
+  from {
+    height: 100vh;
+  }
+  to {
+    height: 0;
+  }
+}
+
+@-moz-keyframes hangup {
+  from {
+    height: 100vh;
+  }
+  to {
+    height: 0;
+  }
+}
+
+@-webkit-keyframes hangup {
+  from {
+    height: 100vh;
+  }
+  to {
+    height: 0;
+  }
+}
+
+/* 背景模糊 */
+.blur-lg {
+  backdrop-filter: blur(10rem);
+  background: rgba(0, 0, 0, .9);
+}
+
+.blur-md {
+  backdrop-filter: blur(1rem);
+  background: rgba(0, 0, 0, .5);
+}
+
+.blur-sm {
+  backdrop-filter: blur(0.1rem);
+  background: rgba(0, 0, 0, .5);
+}
+
+.btn {
+  height: 3.5rem;
+  width: 3.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  img {
+    width: 2rem;
+    height: 2rem;
+  }
+}
+
+.btn-round {
+  border-radius: 50%;
+}
+
+/* 正方形大按钮 */
+.btn-large {
+  height: 4.5rem;
+  width: 4.5rem;
+}
+
+.btn-danger {
+  background: $danger-color;
+}
+
+.btn-primary {
+  background: $primary-color;
+}

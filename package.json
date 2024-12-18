@@ -1,0 +1,42 @@
+{
+  "name": "vue-av-call",
+  "version": "1.0.0",
+  "description": "The audio and video call component for vue3",
+  "type": "commonjs",
+  "main": "dist/vue-av-call.umd.js",
+  "module": "dist/vue-av-call.es.js",
+  "files": [
+    "src",
+    "wsServer.js",
+    "dist",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "vite build",
+    "start-websocket": "node wsServer.js"
+  },
+  "keywords": [
+    "audio",
+    "video",
+    "call",
+    "vue3",
+    "vue"
+  ],
+  "author": "Jeunfy <824314051@qq.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Juenfy/vue-av-call"
+  },
+  "devDependencies": {
+    "sass-embedded": "^1.83.0",
+    "vite": "^6.0.3",
+    "vitest": "^2.1.8",
+    "vue": "^3.5.13"
+  },
+  "dependencies": {
+    "@vitejs/plugin-vue": "^5.2.1",
+    "ws": "^8.18.0"
+  }
+}
