@@ -1,4 +1,4 @@
-The audio and video call component for vue3
+基于vue3的音视频通话组件
 =======================
 
 [![NPM package][npm-img]][npm-url]
@@ -10,18 +10,17 @@ The audio and video call component for vue3
     <a href="https://call.juenfy.cn"><img width="40%" src="https://raw.githubusercontent.com/Juenfy/resources/refs/heads/master/call/1734492051485.jpg"></a>
 </p>
 
-1.Audio call support.<br/>
-2.Video call support.
+1.支持语音通话.<br/>
+2.支持视频通话.
 
 PS:Only support call by one to one
 
 ## Demo
-### How to run the demo?
+### 如何运行demo?
 ```shell
 git clone https://github.com/Juenfy/vue-av-call.git
 cd vue-av-call
 npm install
-#创建软链符号
 npm link
 npm run start-websocket
 cd demo
@@ -30,79 +29,79 @@ npm link vue-av-call
 npm run dev
 ```
 
-## Quick start
-### How to install?
+## 快速开始
+### 如何安装?
 ```shell
 npm i vue-av-call
 ```
-### How to start websocket server?
+### 如何启动websocket服务?
 ```shell
 cd node_modules/vue-av-call
-# run in default port 8080
+# 默认8080端口
 npm run start-websocket
-# run in other port
+# 指定端口
 npm run start-websocket -- port=2346
-# run in wss. ca is not required.
+# 开启wss ca证书链非必传
 npm run start-websocket -- cert=/path/to/cert key=/path/to/key ca=/path/to/ca
 ```
 
-### How to use?
+### 如何使用?
 
 ```js
-//import
+//导入
 import {AvCall} from "vue-av-call"
 import * as call from "vue-av-call"
 import "vue-av-call/dist/vue-av-call.css"
 
-//Preparation before the call
+//拨打通话前的准备
 
-//Set call from at first.
+//首先设置发起方的用户信息
 call.setCallFrom({
     id: 1,
     nickanme: 'test001',
     avatar: 'https://api.multiavatar.com/1.png'
 })
 
-//Set call to secondly.
+//再设置接收方的用户信息
 call.setCallTo({
     id: 2,
     nickanme: 'test002',
     avatar: 'https://api.multiavatar.com/2.png'
 })
 
-//Call by audio or video type finally.
-call.startCall(call.CALL_TYPE.AUDIO)
-//or
-call.startCall(call.CALL_TYPE.VIDEO)
+//最后拨打语音或者视频电话
+call.startCall(call.CALL_TYPE.AUDIO) //语音通话
+
+call.startCall(call.CALL_TYPE.VIDEO) //视频通话
 ```
 ```html
 <!-- template -->
 <av-call></av-call>
 ```
 
-## API reference
+## API 参考
 
-### Initialisation
+### 初始化
 
-| Props                          | Description                                                      |                          Default                          |
-|--------------------------------|------------------------------------------------------------------|:---------------------------------------------------------:|
-| <b>wss</b>: <i>Boolean</i>     | Connect websocket by wss.                                        |                          `false`                          |
-| <b>port</b>: <i>Number</i>     | Set the port to connect websocket.                               |                          `8080`                           |
-| <b>timeout</b>: <i>Number</i>  | Set the seconds to auto hang up if no one answers after timeout. |                           `30`                            |
-| <b>ringtone</b>: <i>Object</i> | Set the ring tone of call and hang up.                           | `{call:new Audio(call.mp3),hangup:new Audio(hangup.mp3)}` |
-| <b>debug</b>: <i>Boolean</i>   | Alert message when something error.                              |                          `false`                          |
+| Props参数                        | 描述              |                            默认                             |
+|--------------------------------|-----------------|:---------------------------------------------------------:|
+| <b>wss</b>: <i>Boolean</i>     | 开启wss协议         |                          `false`                          |
+| <b>port</b>: <i>Number</i>     | 指定连接端口          |                          `8080`                           |
+| <b>timeout</b>: <i>Number</i>  | 设置超时未接听自动挂断，单位秒 |                           `30`                            |
+| <b>ringtone</b>: <i>Object</i> | 自定义通话与挂断的铃声提示   | `{call:new Audio(call.mp3),hangup:new Audio(hangup.mp3)}` |
+| <b>debug</b>: <i>Boolean</i>   | 浏览器会弹出一些错误信息    |                          `false`                          |
 
-| Events           | Description                                              |  Callback params  |
-|------------------|----------------------------------------------------------|:-----------------:|
-| <b>onOpen</b>    | Websocket onopen callback.                               | `websocket event` |
-| <b>onMessage</b> | Websocket onmessage callback.                            | `websocket event` |
-| <b>onClose</b>   | Websocket onclose callback.                              | `websocket event` |
-| <b>onCallOut</b> | Callback when i start to call someone.                   |    `see demo`     |
-| <b>onCallIn</b>  | Callback when someone start to call me.                  |    `see demo`     |
-| <b>onAnswerCall</b>  | Callback when we answer the phone.                       |    `see demo`     |
-| <b>onHangupCall</b>  | Callback when we hang up the phone.                      |    `see demo`     |
-| <b>onCallError</b>  | Callback when something error during the call.           |    `see demo`     |
-| <b>onControl</b>  | Callback when we switch it such as the speaker or other. |    `see demo`     |
+| Events事件            | 描述                 |       回调参数        |
+|---------------------|--------------------|:-----------------:|
+| <b>onOpen</b>       | Websocket 连接成功的回调  | `websocket event` |
+| <b>onMessage</b>    | Websocket 接收到消息的回调 | `websocket event` |
+| <b>onClose</b>      | Websocket 关闭连接的回调  | `websocket event` |
+| <b>onCallOut</b>    | 拨打时回调              |    `see demo`     |
+| <b>onCallIn</b>     | 来电时回调              |    `see demo`     |
+| <b>onAnswerCall</b> | 接通电话时回调            |    `see demo`     |
+| <b>onHangupCall</b> | 挂断电话时回调            |    `see demo`     |
+| <b>onCallError</b>  | 通话过程中异常回调          |    `see demo`     |
+| <b>onControl</b>    | 切换扬声器等开关按钮时回调      |    `see demo`     |
 
 [npm-img]: https://img.shields.io/npm/v/vue-av-call
 [npm-url]: https://npmjs.org/package/vue-av-call
