@@ -10,7 +10,8 @@
     "wsServer.js",
     "dist",
     "LICENSE",
-    "README.md"
+    "README.md",
+    "README_en.md"
   ],
   "scripts": {
     "build": "vite build",
