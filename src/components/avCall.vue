@@ -188,6 +188,7 @@ const callIn = async (data) => {
     return
   }
   callDuration.value = 0
+  controlBtn.value.camera = callType.value === CALL_TYPE.VIDEO
   await setCallTo(data.from)
   if (!from.value) {
     await setCallFrom(data.to)
