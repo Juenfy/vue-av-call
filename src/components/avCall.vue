@@ -81,6 +81,7 @@ const callOut = async () => {
       message: "您正在通话中，请挂断后再拨打！"
     })
     props.debug && alert("您正在通话中，请挂断后再拨打！")
+    return
   }
   callDuration.value = 0
   controlBtn.value.camera = callType.value === CALL_TYPE.VIDEO
@@ -134,7 +135,7 @@ const callOut = async () => {
           action: "ice-candidate",
           candidate: event.candidate
         }
-        await sendMsg(candidateData)
+        sendMsg(candidateData)
         emit("onIcecandidate", candidateData)
       }
     }
@@ -148,10 +149,10 @@ const callOut = async () => {
       action: "offer",
       offer: offer
     }
-    await sendMsg(callOutData)
+    sendMsg(callOutData)
     showCall.value = true
     callStatus.value = CALL_STATUS.OUT
-    await playRingTone()
+    playRingTone()
     emit("onCallOut", callOutData)
     // 30秒内未接听，挂断
     setTimeout(() => {
@@ -177,7 +178,7 @@ const callOut = async () => {
 // 接收方拉起来电界面
 const callIn = async (data) => {
   if (callStatus.value !== CALL_STATUS.CLOSE) {
-    await sendMsg({
+    sendMsg({
       type: callType.value,
       from: from.value,
       to: data.from,
@@ -197,7 +198,7 @@ const callIn = async (data) => {
   callType.value = data.type
   showCall.value = true
   callStatus.value = CALL_STATUS.IN
-  await playRingTone()
+  playRingTone()
   const callInData = {
     type: callType.value,
     from: from.value,
@@ -218,16 +219,14 @@ const hangupCall = async (action, content) => {
     duration: callDuration.value,
     action: action
   }
-  await sendMsg(data)
+  sendMsg(data)
   closeThem()
-  await pauseRingTone(true)
   emit("onHangupCall", data)
 }
 
 // 被动挂断通话
 const handleHangup = async (action, content) => {
   closeThem()
-  await pauseRingTone(true)
   const data = {
     type: callType.value,
     from: from.value,
@@ -247,6 +246,7 @@ const closeThem = () => {
   controlBtn.value.microphone = true
   controlBtn.value.speaker = true
   console.log("关闭通话：", showCall.value, callStatus.value)
+  pauseRingTone(true)
   stopCall()
   if (peerConnection.value) {
     peerConnection.value.close()
@@ -316,7 +316,7 @@ const answerCall = async () => {
           action: "ice-candidate",
           candidate: event.candidate
         }
-        await sendMsg(candidateData)
+        sendMsg(candidateData)
         emit("onIcecandidate", candidateData)
       }
     }
@@ -336,9 +336,9 @@ const answerCall = async () => {
       action: "answer",
       answer: answer
     }
-    await sendMsg(answerCallData)
+    sendMsg(answerCallData)
     callStatus.value = CALL_STATUS.CALLING
-    await pauseRingTone()
+    pauseRingTone()
     interval.value = setInterval(() => {
       ++callDuration.value
     }, 1000)
@@ -368,7 +368,7 @@ const handleAnswer = async (answer) => {
   }
 
   iceCandidateQueue.value = []
-  await pauseRingTone()
+  pauseRingTone()
   interval.value = setInterval(() => {
     ++callDuration.value
   }, 1000)
@@ -393,12 +393,12 @@ const handleNewICECandidate = async (candidate) => {
 }
 
 // 播放铃声
-const playRingTone = async () => {
+const playRingTone = () => {
   props.ringtone.call.loop = true
   props.ringtone.call.play()
 }
 // 停止播放铃声
-const pauseRingTone = async (stop = false) => {
+const pauseRingTone = (stop = false) => {
   props.ringtone.call.loop = false
   props.ringtone.call.pause()
   if (stop) props.ringtone.hangup.play()
@@ -522,10 +522,10 @@ const startWebsocket = async () => {
 }
 
 // 发送消息封装
-const sendMsg = async (message) => {
+const sendMsg = (message) => {
   if (ws.value) {
     message = typeof message === "string" ? message : JSON.stringify(message)
-    await ws.value.send(message)
+    ws.value.send(message)
   }
 }
 
@@ -539,10 +539,10 @@ const onMouseDown = (event) => {
   mouseDownStartPos.value.y = event.clientY - localVideoPos.value.y
 
   // 添加 mousemove 和 mouseup 事件监听器
-  document.addEventListener('touchmove', onMouseMove)
-  document.addEventListener('touchend', onMouseUp)
-  document.addEventListener('mousemove', onMouseMove)
-  document.addEventListener('mouseup', onMouseUp)
+  document.addEventListener("touchmove", onMouseMove)
+  document.addEventListener("touchend", onMouseUp)
+  document.addEventListener("mousemove", onMouseMove)
+  document.addEventListener("mouseup", onMouseUp)
 
 }
 // 鼠标移动时
@@ -560,10 +560,10 @@ const onMouseMove = (event) => {
 const onMouseUp = () => {
   isLocalVideoDragging.value = false
   // 移除事件监听器
-  document.removeEventListener('mousemove', onMouseMove)
-  document.removeEventListener('mouseup', onMouseUp)
-  document.removeEventListener('touchmove', onMouseMove)
-  document.removeEventListener('touchend', onMouseUp)
+  document.removeEventListener("mousemove", onMouseMove)
+  document.removeEventListener("mouseup", onMouseUp)
+  document.removeEventListener("touchmove", onMouseMove)
+  document.removeEventListener("touchend", onMouseUp)
 }
 
 
