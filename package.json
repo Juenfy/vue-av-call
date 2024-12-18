@@ -1,6 +1,6 @@
 {
   "name": "vue-av-call",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "The audio and video call component for vue3",
   "type": "commonjs",
   "main": "dist/vue-av-call.umd.js",
