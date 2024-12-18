@@ -566,6 +566,13 @@ const onMouseUp = () => {
   document.removeEventListener('touchend', onMouseUp)
 }
 
+
+const handleBeforeunload = () => {
+  if (callStatus.value !== CALL_STATUS.CLOSE) {
+    hangupCall("hangup", "已挂断")
+  }
+}
+
 // 监听拨打电话
 watch(isCall, (val) => {
   if (val && ws.value) {
@@ -581,16 +588,13 @@ watch(() => from.value, (newVal, oldVal) => {
 
 onMounted(() => {
   console.log("AvCall is Mounted!")
+  window.addEventListener('beforeunload', handleBeforeunload)
 })
-onBeforeUnmount(async () => {
-  if (callStatus.value !== CALL_STATUS.CLOSE) {
-    await hangupCall("hangup", "已挂断")
-  }
+
+onBeforeUnmount(() => {
+  window.removeEventListener('beforeunload', handleBeforeunload)
   if (ws.value)
     ws.value.close()
-})
-onUnmounted(() => {
-
 })
 </script>
 
