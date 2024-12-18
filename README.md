@@ -6,8 +6,8 @@ The audio and video call component for vue3
 [![NPM Downloads][npm-downloads-img]][npm-downloads-url]
 
 <p align="center" style="display: flex">
-    <a href="https://call.juenfy.cn"><img width="80%" src="https://raw.githubusercontent.com/Juenfy/resources/refs/heads/master/call/1734492014395.jpg"></a>
-    <a href="https://call.juenfy.cn"><img width="80%" src="https://raw.githubusercontent.com/Juenfy/resources/refs/heads/master/call/1734492051485.jpg"></a>
+    <a href="https://call.juenfy.cn"><img width="40%" src="https://raw.githubusercontent.com/Juenfy/resources/refs/heads/master/call/1734492014395.jpg"></a>
+    <a href="https://call.juenfy.cn"><img width="40%" src="https://raw.githubusercontent.com/Juenfy/resources/refs/heads/master/call/1734492051485.jpg"></a>
 </p>
 
 1.Audio call support.<br/>
