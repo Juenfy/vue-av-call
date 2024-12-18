@@ -13,7 +13,7 @@
 1.支持语音通话.<br/>
 2.支持视频通话.
 
-PS:Only support call by one to one
+PS:暂时只支持一对一通话
 
 ## Demo
 ### 如何运行demo?
