@@ -30,6 +30,10 @@ const props = defineProps({
       hangup: new Audio(hangupAudio)
     }
   },
+  muted: {
+    type: Boolean,
+    default: false
+  },
   debug: {
     type: Boolean,
     default: true
@@ -420,14 +424,18 @@ const handleNewICECandidate = async (candidate) => {
 
 // 播放铃声
 const playRingTone = () => {
-  props.ringtone.call.loop = true
-  props.ringtone.call.play()
+  if (!props.muted) {
+    props.ringtone.call.loop = true
+    props.ringtone.call.play()
+  }
 }
 // 停止播放铃声
 const pauseRingTone = (stop = false) => {
-  props.ringtone.call.loop = false
-  props.ringtone.call.pause()
-  if (stop) props.ringtone.hangup.play()
+  if (!props.muted) {
+    props.ringtone.call.loop = false
+    props.ringtone.call.pause()
+    if (stop) props.ringtone.hangup.play()
+  }
 }
 
 // 摄像头、扬声器、麦克风开关控制
