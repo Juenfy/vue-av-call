@@ -43,13 +43,11 @@ const callStatus = ref(CALL_STATUS.CLOSE)
 const callDuration = ref(0)
 const interval = ref(null)
 const remoteAudio = ref(null)
-const isRemoteAudioPlaying = ref(false)
 const localVideoPos = ref({x: 10, y: 10}) // 本地视频初始位置
 const mouseDownStartPos = ref({x: 0, y: 0})  // 鼠标按下时的位置
 const isLocalVideoDragging = ref(false)  // 是否正在拖拽本地视频
 const localVideo = ref(null)
 const remoteVideo = ref(null)
-const isRemoteVideoPlaying = ref(false)
 const controlBtn = ref({
   camera: true,
   microphone: true,
@@ -88,11 +86,23 @@ const callOut = async () => {
   // 获取本地媒体流
   try {
     stream.value = await navigator.mediaDevices.getUserMedia({
-      video: callType.value === CALL_TYPE.VIDEO,
-      audio: true
+      video: callType.value === CALL_TYPE.VIDEO ? {
+        facingMode: "user",
+        width: document.body.clientWidth,
+        height: document.body.clientHeight,
+        aspectRatio: document.body.clientWidth / document.body.clientHeight
+      } : false,
+      audio: {
+        sampleRate: 44100,
+        sampleSize: 16,
+        channelCount: 2
+      }
     })
     if (callType.value === CALL_TYPE.VIDEO) {
       localVideo.value.srcObject = stream.value
+      localVideo.value.onloadedmetadata = () => {
+        localVideo.value.play()
+      }
     }
     // 初始化 PeerConnection
     peerConnection.value = new RTCPeerConnection(configuration)
@@ -107,15 +117,13 @@ const callOut = async () => {
       remoteStream.value = event.streams[0]
       if (callType.value === CALL_TYPE.VIDEO) {
         remoteVideo.value.srcObject = remoteStream.value
-        if (!isRemoteVideoPlaying.value) {
+        remoteVideo.value.onloadedmetadata = () => {
           remoteVideo.value.play()
-          isRemoteVideoPlaying.value = true
         }
       } else {
         remoteAudio.value.srcObject = remoteStream.value
-        if (!isRemoteAudioPlaying.value) {
+        remoteAudio.value.onloadedmetadata = () => {
           remoteAudio.value.play()
-          isRemoteAudioPlaying.value = true
         }
       }
     }
@@ -275,11 +283,23 @@ const answerCall = async () => {
   // 获取本地媒体流
   try {
     stream.value = await navigator.mediaDevices.getUserMedia({
-      video: callType.value === CALL_TYPE.VIDEO,
-      audio: true
+      video: callType.value === CALL_TYPE.VIDEO ? {
+        facingMode: "user",
+        width: document.body.clientWidth,
+        height: document.body.clientHeight,
+        aspectRatio: document.body.clientWidth / document.body.clientWidth
+      } : false,
+      audio: {
+        sampleRate: 44100,
+        sampleSize: 16,
+        channelCount: 2
+      }
     })
     if (callType.value === CALL_TYPE.VIDEO) {
       localVideo.value.srcObject = stream.value
+      localVideo.value.onloadedmetadata = () => {
+        localVideo.value.play()
+      }
     }
     // 初始化 PeerConnection
     peerConnection.value = new RTCPeerConnection(configuration)
@@ -294,8 +314,14 @@ const answerCall = async () => {
       remoteStream.value = event.streams[0]
       if (callType.value === CALL_TYPE.VIDEO) {
         remoteVideo.value.srcObject = remoteStream.value
+        remoteVideo.value.onloadedmetadata = () => {
+          remoteVideo.value.play()
+        }
       } else {
         remoteAudio.value.srcObject = remoteStream.value
+        remoteAudio.value.onloadedmetadata = () => {
+          remoteAudio.value.play()
+        }
       }
     }
 
